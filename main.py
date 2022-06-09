@@ -1,18 +1,27 @@
+import os
+
 import cv2
 from cvzone.HandTrackingModule import HandDetector
 
-cap = cv2.VideoCapture(1)
-cap.set(3, 1280)
-cap.set(4, 720)
+IMAGE_PATH = os.getcwd() + os.path.sep + "Resources" + os.path.sep + "webpage.png"
+WEBCAM_INDEX = 0
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+SCREEN_FPS = 60
 
-detector = HandDetector(detectionCon=0.7)
+cap = cv2.VideoCapture(WEBCAM_INDEX)
+cap.set(3, SCREEN_WIDTH)
+cap.set(4, SCREEN_HEIGHT)
+cap.set(5, SCREEN_FPS)
+
+detector = HandDetector(detectionCon=0.8)
 startDist = None
 scale = 0
 cx, cy = 500, 500
 while True:
     success, img = cap.read()
     hands, img = detector.findHands(img)
-    img1 = cv2.imread("cvarduino.jpg")
+    img1 = cv2.imread(IMAGE_PATH)
 
     if len(hands) == 2:
         # print(detector.fingersUp(hands[0]), detector.fingersUp(hands[1]))
